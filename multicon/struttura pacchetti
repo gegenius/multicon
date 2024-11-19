@@ -1,0 +1,40 @@
+json:
+
+{ "mode" : "data"/"man", "token" : token(int), "data" : data(byte) }
+
+MODE
+    serve per identificare subito il tipo di pacchetto
+
+    "man"
+        indica che è un pacchetto di managment della connessione
+    "data"
+        indica che il pacchetto contiene solo dati
+
+TOKEN
+    contiene il token in caso di connessione con il server per identificare da chi viene il pacchetto
+    oppure specifica il token del server all'inizio della connessione
+
+    è un numero intero che aumenta di uno a ogni connessione da parte di un client
+
+DATA
+    nella fase di inizio della connessione contiene il tipo di connessione che si vuole usufruire (client/server)
+    oppure contiene i dati che i 2 client (client-server/client-client) si scambiano
+
+bytes
+
+base64(data)
+
+i dati fra client-client e server (dove non serve specificare alcun token) vengono direttamente inviati con codifica base64
+per unificare i caratteri ed evitare che nella classe ConnWrap il paccketto venga scambiato per json.
+
+
+
+MESSAGGI DI GESTIONE DELLA CONNESSIONE
+
+error.permissiondenied > il client non ha il permesso di eseguire questa operazione
+notification.disconnect > interruzione della connessione
+notification.disconnect.client > il client con il token inviato si è disconnesso
+notification.tunnel.start > il server informa il client che il tunnel è iniziato
+
+conn.cli > è il tag che indica che il client vuole connettersi ad un tunnel
+conn.ser > è il tag che indica che il client vuole creare un tunnel
